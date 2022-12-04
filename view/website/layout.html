@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HMS - {{title}}</title>
+    <style type="text/css">
+        *, ::before, ::after{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            font-family: "Droid Sans",sans-serif
+        }
+        nav{
+            background-color: aliceblue;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 1em;
+            position: fixed;
+        }
+        nav a {
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-right: 1em;
+            padding: 1em;
+        }
+        main{
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-content: center;
+            align-items: stretch;
+            padding: 1em;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="/">Home</a>
+    <br>
+    <a href="/appointment">Appointment</a>
+</nav>
+<main>
+{{content}}
+</main>
+</body>
+</html>

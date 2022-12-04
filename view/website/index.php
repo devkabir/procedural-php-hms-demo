@@ -1,2 +1,1 @@
-<?php
-echo __FILE__ . PHP_EOL;
+<h1>Home Page</h1>
