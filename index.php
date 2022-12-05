@@ -5,6 +5,7 @@
 $controllers = __DIR__ . '/controller';
 $models = __DIR__ . '/model';
 $views = __DIR__ . '/view';
+$helpers = __DIR__ . '/helpers';
 /**
  * @var string $request_uri The URI which was given in order to access this page.
  * @see https://www.php.net/reserved.variables.server#:~:text=e.%20included)%20file.-,%27REQUEST_URI%27,-The%20URI%20which
@@ -20,7 +21,9 @@ $request_method = $_SERVER['REQUEST_METHOD'];
  *
  * @author Dev Kabir <dev.kabir01@gmail.com>
  */
-require_once __DIR__ . '/helpers.php';
+require_once $helpers . '/view.php';
+require_once $helpers . '/validation.php';
+require_once $helpers . '/notification.php';
 /**
  * Send request to controllers according to request.
  *

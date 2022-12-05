@@ -14,3 +14,6 @@ function render(string $title, string $layout, string $content)
     $view = str_replace('{{content}}', $content, $layout);
     echo $view;
 }
+
+
+

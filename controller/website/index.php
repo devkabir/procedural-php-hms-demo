@@ -18,17 +18,24 @@ $layout = file_get_contents($views . '/website/layout.html');
  *
  * @author Dev Kabir <dev.kabir01@gmail.com>
  */
+session_start();
 switch ($website_uri) {
     case '/':
         require_once __DIR__ . '/home.php';
         show_homepage($views, $layout);
+        session_destroy();
         break;
     case '/appointment':
         require_once __DIR__ . '/appointment.php';
         if ($request_method === 'GET') {
             show_appointment_form($views, $layout);
+            session_destroy();
         } else {
-            create_appointment($_REQUEST);
+            /**
+             * @var string $http_referer
+             */
+            $http_referer = $_SERVER['HTTP_REFERER'];
+            create_appointment($_REQUEST, $http_referer);
         }
         break;
     default:

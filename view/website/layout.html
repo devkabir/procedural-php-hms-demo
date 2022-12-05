@@ -4,44 +4,50 @@
     <meta charset="UTF-8">
     <title>HMS - {{title}}</title>
     <style type="text/css">
-        *, ::before, ::after{
+        :root {
+            --header-width: 20vw;
+            --content-width: calc(90vw - var(--header-width))
+        }
+
+        *, ::before, ::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        body{
-            font-family: "Droid Sans",sans-serif
+
+        body {
+            font-family: "Droid Sans",sans-serif;
         }
-        nav{
+
+        nav {
             background-color: aliceblue;
+            padding: 1em;
+            width: var(--header-width);
+            height: 100%;
+            position: fixed;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            flex-wrap: wrap;
-            padding: 1em;
-            position: fixed;
         }
+
         nav a {
             text-decoration: none;
             font-weight: bold;
             text-transform: uppercase;
-            margin-right: 1em;
-            padding: 1em;
+            padding: 0.5em;
         }
-        main{
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
-            align-content: center;
-            align-items: stretch;
+
+        main {
+            width: var(--content-width);
             padding: 1em;
+            position: relative;
+            left: var(--header-width);
         }
     </style>
+
 </head>
 <body>
 <nav>
     <a href="/">Home</a>
-    <br>
     <a href="/appointment">Appointment</a>
 </nav>
 <main>
