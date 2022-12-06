@@ -16,7 +16,7 @@
         }
 
         body {
-            font-family: "Droid Sans",sans-serif;
+            font-family: "Droid Sans", sans-serif;
         }
 
         nav {
@@ -42,6 +42,62 @@
             position: relative;
             left: var(--header-width);
         }
+
+        .success {
+            position: relative;
+            padding: 0.75rem 1.25rem;
+            margin-bottom: 1rem;
+            border-radius: 0.25rem;
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .form-error {
+            width: 100%;
+            margin: 1em 0;
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        h1 {
+            background-color: antiquewhite;
+            margin-bottom: 0.5em;
+            padding: 0.5em;
+            border-radius: 10px;
+        }
+
+        .form-group {
+            display: grid;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            margin-top: 0.5em;
+        }
+
+        input,
+        textarea {
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 0.5em;
+        }
+
+        input[type="submit"] {
+            background-color: antiquewhite;
+            margin-top: 0.5em;
+            width: 100%;
+            cursor: pointer;
+            border: none;
+            font-weight: bold;
+            font-size: large;
+        }
+
+        li {
+            color: red;
+            list-style: none;
+        }
     </style>
 
 </head>
@@ -51,7 +107,7 @@
     <a href="/appointment">Appointment</a>
 </nav>
 <main>
-{{content}}
+    {{content}}
 </main>
 </body>
 </html>

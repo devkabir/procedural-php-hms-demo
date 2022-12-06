@@ -1,41 +1,41 @@
 <?php
+/** Making the variables `$request_uri`, `$request_method`, and `$views` available to the
+ * current file.
+ */
+global $request_uri, $request_method, $views;
 /**
- * Extract routes for website
- *
- * @see    https://php.net/manual/en/function.sscanf.php
- *
- * @author Dev Kabir <dev.kabir01@gmail.com>
+ * Getting the first part of the URL. For example, if the URL is `http://example.com/appointment`, it
+ * will get `/appointment`.
  */
 sscanf($request_uri, "%s", $website_uri);
+
 /**
- * Get layout for the website
- *
- * @author Dev Kabir <dev.kabir01@gmail.com>
+ *  Getting the contents of the layout file.
  */
 $layout = file_get_contents($views . '/website/layout.html');
+
 /**
- * Router for the website
- *
- * @author Dev Kabir <dev.kabir01@gmail.com>
+ * The router for the website. It is responsible for loading the correct page based on the URL.
  */
 session_start();
 switch ($website_uri) {
     case '/':
         require_once __DIR__ . '/home.php';
-        show_homepage($views, $layout);
+        show_homepage();
         session_destroy();
         break;
     case '/appointment':
         require_once __DIR__ . '/appointment.php';
         if ($request_method === 'GET') {
-            show_appointment_form($views, $layout);
+            show_appointment_form();
             session_destroy();
         } else {
             /**
-             * @var string $http_referer
+             * Getting the URL of the page that the user was on before they clicked the link to the
+             * appointment page.
              */
             $http_referer = $_SERVER['HTTP_REFERER'];
-            create_appointment($_REQUEST, $http_referer);
+            process_appointment($_REQUEST, $http_referer);
         }
         break;
     default:
