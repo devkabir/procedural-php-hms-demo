@@ -10,7 +10,7 @@ function show_homepage(): void
     global $views, $layout;
     $title = 'Home';
     ob_start();
-    include $views . '/website/index.php';
+    include $views.'/website/index.php';
     $content = ob_get_clean();
     render($title, $layout, $content);
 }

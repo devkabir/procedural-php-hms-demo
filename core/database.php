@@ -1,13 +1,13 @@
 <?php
-$host = 'localhost';
+$host     = 'localhost';
 $database = 'hms';
-$user = 'root';
+$user     = 'root';
 $password = '';
-$dsn = "mysql:host=$host;dbname=$database;charset=UTF8";
-$options = [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+$dsn      = "mysql:host=$host;dbname=$database;charset=UTF8";
+$options  = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES => false,
+    PDO::ATTR_EMULATE_PREPARES   => false,
 ];
 try {
     $pdo = new PDO($dsn, $user, $password, $options);
@@ -19,7 +19,7 @@ try {
 /**
  * If the table exists, return true. If it doesn't, die.
  *
- * @param string $name The name of the table to check for.
+ * @param  string  $name  The name of the table to check for.
  *
  * @return bool a boolean value.
  */
@@ -27,8 +27,8 @@ function has_table(string $name): bool
 {
     global $pdo;
     $tables = $pdo->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN);
-    $found = in_array($name, $tables, true);
-    if (!$found) {
+    $found  = in_array($name, $tables, true);
+    if ( ! $found) {
         whistleblower("The table '$name' does not exist");
     }
 
@@ -40,9 +40,9 @@ function has_table(string $name): bool
  * It takes a table name, an array of fields, and an array of values, and inserts them into the
  * database.
  *
- * @param string $table  the table name
- * @param array  $fields an array of the fields you want to insert into
- * @param array  $values array of values to be inserted
+ * @param  string  $table  the table name
+ * @param  array  $fields  an array of the fields you want to insert into
+ * @param  array  $values  array of values to be inserted
  *
  * @return int The last inserted id.
  */
@@ -53,30 +53,55 @@ function create(string $table, array $fields, array $values): int
     try {
         has_table($table);
         $get_only_allowed_fields = array_intersect_key($values, $fields);
-        $keys = array_keys($get_only_allowed_fields);
-        $columns = fix_column_name(implode(', ', $keys));
-        $hold = fix_column_name(implode(',', array_map(static fn($field) => ":{$field}", $keys)));
-        $sql = "insert into $table ($columns) values ($hold)";
-        $statement = $pdo->prepare($sql);
+        $keys                    = array_keys($get_only_allowed_fields);
+        $columns                 = fix_column_name(implode(', ', $keys));
+        $hold                    = fix_column_name(implode(',', array_map(static fn($field) => ":{$field}", $keys)));
+        $sql                     = "insert into $table ($columns) values ($hold)";
+        $statement               = $pdo->prepare($sql);
+        write_log($statement);
+        write_log($values);
         $statement->execute($get_only_allowed_fields);
         $insertId = $pdo->lastInsertId();
         $pdo->commit();
-        return (int)$insertId;
+
+        return (int) $insertId;
+
     } catch (PDOException $e) {
         $pdo->rollback();
         whistleblower($e->getMessage());
     }
+
+    return 0;
 
 }
 
 /**
  * It replaces all dashes with underscores
  *
- * @param string implode The string to be converted.
+ * @param  string  $implode  The string to be converted.
  *
  * @return string name with all the dashes replaced with underscores.
  */
 function fix_column_name(string $implode): string
 {
     return str_replace('-', '_', $implode);
+}
+
+function exists_in_db(string $table, string $column, string $value): bool
+{
+    global $pdo;
+    $pdo->beginTransaction();
+    try {
+        $sql       = "SELECT COUNT(*) as count FROM $table WHERE $column = :value";
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam('value', $value);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        $pdo->commit();
+    } catch (PDOException $e) {
+        $pdo->rollback();
+        whistleblower($e->getMessage());
+    }
+
+    return $result['count'] > 0;
 }

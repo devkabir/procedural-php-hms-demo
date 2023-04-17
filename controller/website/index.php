@@ -12,7 +12,7 @@ sscanf($request_uri, "%s", $website_uri);
 /**
  *  Getting the contents of the layout file.
  */
-$layout = file_get_contents($views . '/website/layout.html');
+$layout = file_get_contents($views.'/website/layout.html');
 
 /**
  * The router for the website. It is responsible for loading the correct page based on the URL.
@@ -20,12 +20,12 @@ $layout = file_get_contents($views . '/website/layout.html');
 session_start();
 switch ($website_uri) {
     case '/':
-        require_once __DIR__ . '/home.php';
+        require_once __DIR__.'/home.php';
         show_homepage();
         session_destroy();
         break;
     case '/appointment':
-        require_once __DIR__ . '/appointment.php';
+        require_once __DIR__.'/appointment.php';
         if ($request_method === 'GET') {
             show_appointment_form();
             session_destroy();

@@ -22,10 +22,10 @@ if ($env === 'development') {
 }
 
 /* Defining the path to the controllers, models, views and core folders. */
-$core = __DIR__ . '/core';
-$models = __DIR__ . '/model';
-$views = __DIR__ . '/view';
-$controllers = __DIR__ . '/controller';
+$core        = __DIR__.'/core';
+$models      = __DIR__.'/model';
+$views       = __DIR__.'/view';
+$controllers = __DIR__.'/controller';
 
 /* Getting the request URI from the server. */
 $request_uri = $_SERVER['REQUEST_URI'];
@@ -34,22 +34,22 @@ $request_uri = $_SERVER['REQUEST_URI'];
 $request_method = $_SERVER['REQUEST_METHOD'];
 
 /* Including the core files. */
-require_once $core . '/view.php';
-require_once $core . '/form.php';
-require_once $core . '/time.php';
-require_once $core . '/response.php';
-require_once $core . '/database.php';
-require_once $core . '/validation.php';
-require_once $core . '/notification.php';
-
+require_once $core.'/view.php';
+require_once $core.'/form.php';
+require_once $core.'/time.php';
+require_once $core.'/response.php';
+require_once $core.'/notification.php';
+require_once $core.'/database.php';
+require_once $core.'/validation.php';
+write_log(__FILE__);
 
 /* Checking the request URI and including the appropriate controller. */
 if (strpos($request_uri, '/admin') === 0) {
-    require $controllers . '/admin/index.php';
+    require $controllers.'/admin/index.php';
 } elseif (strpos($request_uri, '/patient') === 0) {
-    require $controllers . '/patient/index.php';
+    require $controllers.'/patient/index.php';
 } elseif (strpos($request_uri, '/doctor') === 0) {
-    require $controllers . '/doctor/index.php';
+    require $controllers.'/doctor/index.php';
 } else {
-    require $controllers . '/website/index.php';
+    require $controllers.'/website/index.php';
 }

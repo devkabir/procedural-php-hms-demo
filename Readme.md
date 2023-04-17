@@ -1,8 +1,11 @@
 # Hospital Management System - HMS :tada:
 
-A simple, easy-to understand example of a management system made with PHP and the [`MVC`](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) design pattern in a procedural approach. 
+A simple, easy-to understand example of a management system made with PHP and
+the [`MVC`](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) design pattern in a procedural
+approach.
 
 ## Structure :coffee:
+
 ```bash
 ├───controller    # Accepts input and converts it to commands for the model or view.
 │   ├───admin
