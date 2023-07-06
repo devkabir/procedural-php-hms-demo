@@ -18,5 +18,5 @@ function create_patient(array $patient): int
         'password' => password_hash($patient['password'], PASSWORD_BCRYPT),
         'phone'    => $patient['phone'],
     ];
-    return create('patients', $fields, $data);
+    return db_insert('patients', $fields, $data);
 }

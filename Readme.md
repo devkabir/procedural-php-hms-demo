@@ -17,10 +17,18 @@ approach.
 │   ├───doctor
 │   ├───patient
 │   └───website
-└───view          # Any representation of information such as a table. 
+└───view          # Any representation of information such as a table.
     ├───admin
     ├───doctor
     ├───patient
     └───website
 
 ```
+
+## Database desing ?
+
+please review [here](./DatabaseDesign.md)
+
+## Any new update?
+
+please review [changelog](./Changelog.md)

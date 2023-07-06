@@ -6,26 +6,22 @@
  * @author Dev Kabir <dev.kabir01@gmail.com>
  */
 
+define( 'START', microtime( true ) );
+
+/* Configuration loaded. */
+require_once __DIR__ . '/config.php';
 
 /* Setting the error reporting. */
-$env = 'development';
-//$env = 'production';
-if ($env === 'development') {
-    @ini_set('display_errors', true);
-    @ini_set('display_startup_errors', true);
-    @ini_set('error_reporting', -1);
-} else {
-    @ini_set('display_errors', false);
-    @ini_set('display_startup_errors', false);
-    @ini_set('error_reporting', E_ALL);
-    @ini_set('error_log', true);
-}
+error_reporting( E_ALL );
+ini_set( 'display_errors', DEBUG );
+ini_set( 'display_startup_errors', DEBUG );
+ini_set( 'log_errors', ! DEBUG );
 
 /* Defining the path to the controllers, models, views and core folders. */
-$core        = __DIR__.'/core';
-$models      = __DIR__.'/model';
-$views       = __DIR__.'/view';
-$controllers = __DIR__.'/controller';
+$core        = __DIR__ . '/core';
+$models      = __DIR__ . '/model';
+$views       = __DIR__ . '/view';
+$controllers = __DIR__ . '/controller';
 
 /* Getting the request URI from the server. */
 $request_uri = $_SERVER['REQUEST_URI'];
@@ -34,22 +30,23 @@ $request_uri = $_SERVER['REQUEST_URI'];
 $request_method = $_SERVER['REQUEST_METHOD'];
 
 /* Including the core files. */
-require_once $core.'/view.php';
-require_once $core.'/form.php';
-require_once $core.'/time.php';
-require_once $core.'/response.php';
-require_once $core.'/notification.php';
-require_once $core.'/database.php';
-require_once $core.'/validation.php';
-write_log(__FILE__);
+require_once $core . '/view.php';
+require_once $core . '/form.php';
+require_once $core . '/time.php';
+require_once $core . '/response.php';
+require_once $core . '/notification.php';
+require_once $core . '/database.php';
+require_once $core . '/validation.php';
+require_once $core . '/misc.php';
 
 /* Checking the request URI and including the appropriate controller. */
-if (strpos($request_uri, '/admin') === 0) {
-    require $controllers.'/admin/index.php';
-} elseif (strpos($request_uri, '/patient') === 0) {
-    require $controllers.'/patient/index.php';
-} elseif (strpos($request_uri, '/doctor') === 0) {
-    require $controllers.'/doctor/index.php';
+if ( strpos( $request_uri, '/admin' ) === 0 ) {
+	include $controllers . '/admin/index.php';
+} elseif ( strpos( $request_uri, '/patient' ) === 0 ) {
+	include $controllers . '/patient/index.php';
+} elseif ( strpos( $request_uri, '/doctor' ) === 0 ) {
+	include $controllers . '/doctor/index.php';
 } else {
-    require $controllers.'/website/index.php';
+	include $controllers . '/website/index.php';
 }
+echo execution_time();

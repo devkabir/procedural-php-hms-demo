@@ -18,5 +18,5 @@ function create_appointment(array $appointment): int
         'date'       => 'string',
         'reason'     => 'string',
     ];
-    return create('appointments', $fields, $appointment);
+    return db_insert('appointments', $fields, $appointment);
 }
